@@ -135,6 +135,7 @@ def run2():
 		except:
 			s.close()
 			print("\033[92m TEAM X IN ATTACK " + ip)
+			print()
 
 for y in range(threads):
 	if choice == "y":
